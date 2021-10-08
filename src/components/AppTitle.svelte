@@ -1,0 +1,1 @@
+<h1 class="text-4xl font-bold tracking-wide pb-2 pl-2">Shindig</h1>
