@@ -1,9 +1,8 @@
-<script>
-	import EventCard from '../components/EventCard.svelte';
+<script lang="typescript">
+	import { forceLogin } from '../utils';
+
+	forceLogin();
 </script>
 
 <p>events page</p>
 
-<EventCard />
-<EventCard />
-<EventCard />

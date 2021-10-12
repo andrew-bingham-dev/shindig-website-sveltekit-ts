@@ -1,13 +1,13 @@
-<script>
-    import {firstName, lastName} from '../stores/user'
+<script lang="typescript">
+	import { forceLogin } from '../utils';
+	import { user } from '../stores/user';
 
-    function updateName() {
-        lastName.set('Bingers')
-    }
+	forceLogin();
 </script>
 
-<p>profile page</p>
-
-<h2>Name: {$firstName} {$lastName}</h2>
-
-<button on:click={updateName} class="btn">Set last name to Bingers</button>
+<main>
+	<h3>First name: {$user.firstName}</h3>
+	<h3>Last name: {$user.lastName}</h3>
+	<h3>Email: {$user.email}</h3>
+	<h3>Password: {$user.password}</h3>
+</main>
