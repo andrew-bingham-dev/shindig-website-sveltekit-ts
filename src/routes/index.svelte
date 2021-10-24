@@ -1,4 +1,4 @@
-<script lang="typescript">
+<script lang="ts">
 	import EventCard from '$lib/EventCard.svelte';
 	import { forceLogin } from '../utils';
 

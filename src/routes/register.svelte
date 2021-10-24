@@ -1,4 +1,4 @@
-<script lang="typescript">
+<script lang="ts">
 	import { goto } from '$app/navigation';
 	import { user } from '../stores/userStore';
 	import type { User } from '../types';

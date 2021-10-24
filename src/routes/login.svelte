@@ -1,9 +1,9 @@
-<script lang="typescript">
+<script lang="ts">
 	import { isLoggedIn } from '../stores/appStore';
 	import { user } from '../stores/userStore';
 	import { goto } from '$app/navigation';
 	import { minPasswordLength } from '../config';
-	import type { UserLogin } from 'src/types';
+	import type { UserLogin } from '../types';
 
 	let userLogin: UserLogin = {
 		email: '',
