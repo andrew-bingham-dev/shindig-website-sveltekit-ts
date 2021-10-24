@@ -1,6 +1,6 @@
 <script lang="typescript">
 	import { forceLogin } from '../utils';
-	import { user } from '../stores/user';
+	import { user } from '../stores/userStore';
 
 	forceLogin();
 </script>

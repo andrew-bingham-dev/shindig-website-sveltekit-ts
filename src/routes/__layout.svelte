@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import Navbar from '$lib/app-header/Navbar.svelte';
-	import { isLoggedIn } from '../stores/app';
+	import { isLoggedIn } from '../stores/appStore';
 	import AppHeader from '$lib/app-header/AppHeader.svelte';
 </script>
 

@@ -1,6 +1,6 @@
 <script lang="typescript">
 	import { goto } from '$app/navigation';
-	import { user } from '../stores/user';
+	import { user } from '../stores/userStore';
 	import type { User } from '../types';
 	import { minPasswordLength } from '../config';
 

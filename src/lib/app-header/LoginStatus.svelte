@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { user } from '../../stores/user';
-	import { isLoggedIn } from '../../stores/app';
+	import { user } from '../../stores/userStore';
+	import { isLoggedIn } from '../../stores/appStore';
 
 	let loginState: string;
 
