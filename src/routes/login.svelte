@@ -25,7 +25,7 @@
 	}
 </script>
 
-<section class="flex flex-col">
+<main class="flex flex-col">
 	<form on:submit|preventDefault={onClickLoginButton}>
 		<div class="form-control mb-8">
 			<label for="email" class="label">
@@ -63,4 +63,4 @@
 			<a href="/register" role="button" class="btn btn-ghost mx-auto">Register</a>
 		</div>
 	</form>
-</section>
+</main>
