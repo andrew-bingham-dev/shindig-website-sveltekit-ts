@@ -1,6 +1,6 @@
 <script lang="ts">
 	import EventCard from '$lib/EventCard.svelte';
-	import { forceLogin } from '../utils';
+	import { forceLogin } from '../lib/utils';
 
 	forceLogin();
 </script>

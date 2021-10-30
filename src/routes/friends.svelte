@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { forceLogin } from '../utils';
+	import { forceLogin } from '../lib/utils';
 
 	forceLogin();
 </script>
