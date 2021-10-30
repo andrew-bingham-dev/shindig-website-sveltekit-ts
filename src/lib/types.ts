@@ -1,9 +1,10 @@
 export interface User {
 	firstName: string;
 	lastName: string;
+	dob: string;
 	email: string;
-	password: string;
-	isLoggedIn: boolean;
+	id: string;
+	isAdmin: boolean;
 }
 
 export type Users = Array<User>;

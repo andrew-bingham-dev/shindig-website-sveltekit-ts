@@ -1,32 +1,45 @@
 <script lang="ts">
-	import { isLoggedIn } from '../stores/appStore';
-	import { user } from '../stores/userStore';
+	import { auth } from '$lib/firebase';
 	import { goto } from '$app/navigation';
 	import { minPasswordLength } from '../config';
-	import type { UserLogin } from '../types';
+	import { signInWithEmailAndPassword } from 'firebase/auth';
+	import Error from '$lib/alerts/error.svelte';
 
-	let userLogin: UserLogin = {
-		email: '',
-		password: ''
-	};
+	let alertError = null;
 
-	function isValidUser(): boolean {
-		if (userLogin.email !== $user.email) return false;
-		if (userLogin.password !== $user.password) return false;
-		return true;
+	let email: string;
+	let password: string;
+
+	function clearUserDetailsOnPage() {
+		email = '';
+		password = '';
 	}
 
-	function onClickLoginButton() {
-		if (isValidUser) {
-			user.set({ ...$user, isLoggedIn: true });
-			isLoggedIn.set(true);
+	function resetAlerts() {
+		alertError = null;
+	}
+
+	async function onClickLogin() {
+		try {
+			await signInWithEmailAndPassword(auth, email, password);
+			clearUserDetailsOnPage();
 			goto('/');
+		} catch (error) {
+			if (error.code === 'auth/user-not-found') {
+				alertError = error.code;
+			} else {
+				alert(`Error: ${error.code}`);
+			}
 		}
 	}
 </script>
 
 <main class="flex flex-col">
-	<form on:submit|preventDefault={onClickLoginButton}>
+	<form on:submit|preventDefault={onClickLogin} autocomplete="off">
+		{#if alertError}
+			<Error message={alertError} on:clicked={resetAlerts} />
+		{/if}
+
 		<div class="form-control mb-8">
 			<label for="email" class="label">
 				<span class="label-text">Email</span>
@@ -36,8 +49,9 @@
 				type="email"
 				placeholder="Enter your email"
 				class="input input-primary input-bordered"
-				bind:value={userLogin.email}
+				bind:value={email}
 				required
+				on:input={resetAlerts}
 			/>
 		</div>
 		<div class="form-control mb-8">
@@ -49,9 +63,10 @@
 				type="password"
 				placeholder="Enter your password"
 				class="input input-primary input-bordered"
-				bind:value={userLogin.password}
+				bind:value={password}
 				required
 				minlength={minPasswordLength}
+				on:input={resetAlerts}
 			/>
 		</div>
 

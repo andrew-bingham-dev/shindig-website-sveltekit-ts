@@ -1,34 +1,44 @@
 <script lang="ts">
+	import { createUserWithEmailAndPassword } from 'firebase/auth';
+	import { doc, setDoc } from 'firebase/firestore';
+	import { auth, db } from '$lib/firebase';
 	import { goto } from '$app/navigation';
-	import { user } from '../stores/userStore';
-	import type { User } from '../types';
 	import { minPasswordLength } from '../config';
 
 	let firstName: string;
 	let lastName: string;
 	let email: string;
+	let dob;
 	let password: string;
 
-	function onClickCancelButton() {
+	function onClickCancel() {
 		goto('/login');
 	}
 
-	function onCreateAccountButton() {
-		const newUser: User = {
-			firstName,
-			lastName,
-			email,
-			password,
-			isLoggedIn: true
-		};
+	async function onCreateAccount() {
+		try {
+			const responseFromRegister = await createUserWithEmailAndPassword(auth, email, password);
 
-		user.set(newUser);
+			const responseFromCreateUserDoc = await setDoc(
+				doc(db, 'users', responseFromRegister.user.uid),
+				{
+					firstName,
+					lastName,
+					email,
+					dob: new Date(dob),
+					isAdmin: false
+				}
+			);
+		} catch (error) {
+			alert(`error: ${error}`);
+		}
+
 		goto('/login');
 	}
 </script>
 
 <main>
-	<form on:submit|preventDefault={onCreateAccountButton}>
+	<form on:submit|preventDefault={onCreateAccount}>
 		<div class="form-control mb-4">
 			<label for="firstName" class="label">
 				<span class="label-text">First name</span>
@@ -55,6 +65,21 @@
 				required
 				minlength={2}
 				bind:value={lastName}
+				class="input input-primary input-bordered"
+			/>
+		</div>
+
+		<div class="form-control mb-4">
+			<label for="dob" class="label">
+				<span class="label-text">Date of birth</span>
+			</label>
+			<input
+				id="dob"
+				type="text"
+				placeholder="DD/MM/YYYY"
+				required
+				minlength={2}
+				bind:value={dob}
 				class="input input-primary input-bordered"
 			/>
 		</div>
@@ -90,7 +115,7 @@
 
 		<div class="flex justify-between">
 			<button type="submit" class="btn btn-outline btn-primary">Create account</button>
-			<button on:click={onClickCancelButton} class="btn btn-outline btn-primary">Cancel</button>
+			<button on:click={onClickCancel} class="btn btn-outline btn-primary">Cancel</button>
 		</div>
 	</form>
 </main>
